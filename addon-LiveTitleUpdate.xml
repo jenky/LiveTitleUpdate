@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="LiveTitleUpdate" title="Live Title Update" version_string="1.1.1" version_id="3" url="" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="LiveTitleUpdate_option_template"><![CDATA[<xen:checkboxunit label="" hint="{$preparedOption.hint}">
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][enabled]" selected="{$preparedOption.option_value.enabled}">
+		<xen:label>{$preparedOption.title}</xen:label>
+		<xen:checkbox>
+			<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][tinycon]" selected="{$preparedOption.option_value.tinycon}" label="{xen:phrase LiveTitleUpdate_use_tinycon}" hint="{xen:phrase LiveTitleUpdate_tinycon_hint}"/>
+		</xen:checkbox>
+	</xen:option>
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:checkboxunit>]]></template>
+  </admin_templates>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="template_create" execute_order="10" callback_class="Milano_LiveTitleUpdate_Listener" callback_method="templateCreate" active="1" hint="" description=""/>
+    <listener event_id="template_hook" execute_order="10" callback_class="Milano_LiveTitleUpdate_Listener" callback_method="templateHook" active="1" hint="" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <option option_id="LiveTitleUpdate" edit_format="template" data_type="array" can_backup="1">
+      <default_value>a:2:{s:7:"enabled";s:1:"1";s:7:"tinycon";s:1:"1";}</default_value>
+      <edit_format_params>LiveTitleUpdate_option_template</edit_format_params>
+      <sub_options>enabled
+tinycon</sub_options>
+      <relation group_id="alerts" display_order="500"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="LiveTitleUpdate_tinycon_hint" version_id="2" version_string="1.1.0"><![CDATA[Add alert bubbles and changing the favicon image.]]></phrase>
+    <phrase title="LiveTitleUpdate_use_tinycon" version_id="2" version_string="1.1.0"><![CDATA[Use Tinycon]]></phrase>
+    <phrase title="option_LiveTitleUpdate" version_id="2" version_string="1.1.0"><![CDATA[Enable LiveTitleUpdate]]></phrase>
+    <phrase title="option_LiveTitleUpdate_explain" version_id="2" version_string="1.1.0"><![CDATA[LiveTitleUpdate will manipulates the document title to show the number of unviewed notifications]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="LiveTitleUpdate_js" version_id="2" version_string="1.1.0"><![CDATA[
+<xen:if is="{$visitor.user_id} && {$xenOptions.LiveTitleUpdate.enabled}" >
+jQuery.extend(true, XenForo,
+{	
+	LiveTitleUpdate:
+	{
+		tinycon: "{$xenOptions.LiveTitleUpdate.tinycon}"
+	}
+});
+</xen:if>
+]]></template>
+  </templates>
+  <template_modifications/>
+  <bb_code_media_sites/>
+  <app_xenter>
+    <apps/>
+  </app_xenter>
+</addon>
